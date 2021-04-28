@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Bar-chart</h1>
+    <h1>Race-Chart</h1>
     <RaceChart />
   </div>
 </template>

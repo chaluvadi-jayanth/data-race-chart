@@ -17,11 +17,6 @@ export default createStore({
         .then(res => res.json())
         .then(data => {
           commit("cov", data.states_daily)
-          // const totalCovidDataState = data.states_daily
-          // this.state.covidCaseData = data.states_daily
-          // const groupedData = this.processData(totalCovidDataState);
-          // console.log(groupedData);
-          // this.plotChart(groupedData)
         })
     }
   },

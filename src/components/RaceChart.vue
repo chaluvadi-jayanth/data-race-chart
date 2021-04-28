@@ -79,6 +79,8 @@ methods:{
             .data(presentData)
             .enter()
             .append("rect")
+            .attr("fill",d=>d3.hsl(Math.random()*360,0.75,0.75))
+            // .classed("colors",true)
 
         container
             .selectAll("rect")
@@ -88,11 +90,15 @@ methods:{
             .attr("y", (d,i) => sortedRange.findIndex(e => e.key === d.key) * (rectProperties.height + rectProperties.padding))
             .attr("width", d => d.value <= 0? 0 : widthScale(d.value))
             .attr("height", 20)
+            
+
+var len=container.selectAll("rect").size()
+// console.log(len);
 
     }
     for (const date of dateList) {
-       update(date)
-       await new Promise(done => setTimeout(() => done(), ticker));
+        update(date)
+        await new Promise(done => setTimeout(() => done(), ticker));
     } 
 },
 
