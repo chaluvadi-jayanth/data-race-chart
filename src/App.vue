@@ -1,17 +1,17 @@
 <template>
   <div class="container">
     <h1>Bar-chart</h1>
-    <Charts1  />
+    <RaceChart />
   </div>
 </template>
 
 <script>
-import  Charts1 from "./components/Charts1";
+import  RaceChart from './components/RaceChart';
 
 export default {
   name: 'App',
   components: {
-  Charts1
+  RaceChart
   }
 }
 </script>

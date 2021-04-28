@@ -7,30 +7,21 @@
 </template>
 
 <script>
+import  {mapGetters} from 'vuex'
 export default {
-name:'Charts',
-
-// mounted(){
-// fetch('https://api.covid19india.org/states_daily.json')
-// .then(res => res.json())
-// .then(data=> {
-//   console.log(data)
-//   console.log("ok")
-//     const totalCovidDataState = data.states_daily 
-//     const groupedData = this.processData(totalCovidDataState); 
-//     this.plotChart(groupedData)
-// })
-// },
+name:'RaceChart',
+created(){
+this.$store.dispatch('covid')
+},
 mounted(){
-    fetch('https://api.covid19india.org/states_daily.json')
- .then(res => res.json())
- .then(data=> {
-    const totalCovidDataState = data.states_daily 
+    setTimeout(() => {
+    const totalCovidDataState = this.covidCasesData
     const groupedData = this.processData(totalCovidDataState);
-    console.log(groupedData); 
-   this.plotChart(groupedData)
- })
+    // console.log(groupedData); 
+    this.plotChart(groupedData)
+    }, 100);
   },
+  computed:mapGetters(['covidCasesData']),
 methods:{
   
  async plotChart(data) {
@@ -61,7 +52,7 @@ methods:{
         widthScale.domain([0, d3.max(Object.values(presentData), d => d.value)])
                 .range([0, width - fontSize - 50])
 
-        axisTop             
+        axisTop                
             .transition()
             .duration(ticker / 1.2)
             .ease(d3.easeLinear)
@@ -81,15 +72,13 @@ methods:{
             .transition()
             .delay(500)
             .attr("x", d => widthScale(d.value) + fontSize)
-            .attr("y", (d,i) => sortedRange.findIndex(e => e.key === d.key) * (rectProperties.height + rectProperties.padding) + fontSize)
-            
+            .attr("y", (d,i) => sortedRange.findIndex(e => e.key === d.key) * (rectProperties.height + rectProperties.padding) + fontSize) 
 
         container
             .selectAll("rect")
             .data(presentData)
             .enter()
             .append("rect")
-            .attr("fill",d3.hsl(Math.random()*360,0.75,0.75)) 
 
         container
             .selectAll("rect")
@@ -99,8 +88,6 @@ methods:{
             .attr("y", (d,i) => sortedRange.findIndex(e => e.key === d.key) * (rectProperties.height + rectProperties.padding))
             .attr("width", d => d.value <= 0? 0 : widthScale(d.value))
             .attr("height", 20)
-            // .attr("fill",d3.hsl(Math.random()*360,0.75,0.75)) 
-            
 
     }
     for (const date of dateList) {
@@ -109,7 +96,7 @@ methods:{
     } 
 },
 
- processData(data) { 
+processData(data) { 
     return d3.group(data, d => d.date, e => e.status);
 },
 
