@@ -2,26 +2,39 @@
   <div class="container">
     <!-- <h3>Charts</h3> -->
     <svg id="chart" style="width: 80vw;height: 80vh;"></svg>
-
+    <!-- <h1>{{car}}</h1> -->
+    <!-- <h1>{{cases}}</h1> -->
   </div>
 </template>
 
 <script>
-import  {mapGetters} from 'vuex'
+// import  {mapGetters} from 'vuex'
 export default {
 name:'RaceChart',
-created(){
-this.$store.dispatch('covid')
-},
+props:['cases'],
+
+
+
+
+//  async plotChart(data) {
+//     const svg = d3.select("#chart")
+//     const width = svg.node().clientWidth;
+//     const height = svg.node().clientHeight;
+//     
+
+
+
+
+
 mounted(){
     setTimeout(() => {
-    const totalCovidDataState = this.covidCasesData
+    const totalCovidDataState = this.cases
     const groupedData = this.processData(totalCovidDataState);
     // console.log(groupedData); 
     this.plotChart(groupedData)
-    }, 100);
+    }, 500);
   },
-  computed:mapGetters(['covidCasesData']),
+//   computed:mapGetters(['covidCasesData']),
 methods:{
   
  async plotChart(data) {
