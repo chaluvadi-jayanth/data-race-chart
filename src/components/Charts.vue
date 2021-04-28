@@ -13,7 +13,7 @@ name:'Charts',
 mounted(){
 fetch('https://api.covid19india.org/states_daily.json')
 .then(res => res.json())
-.then(data=> {
+.then(data => {
   console.log(data)
   console.log("ok")
     const totalCovidDataState = data.states_daily 
@@ -27,8 +27,10 @@ plotChart(data) {
     const svg = d3.select("#chart")
     const width = svg.node().clientWidth;
     const height = svg.node().clientHeight;
+    // console.log(width,height);
 
     const dateList = Array.from(data.keys()) 
+    console.log(dateList[0]);
     const presentDate = dateList[0]
 
     const presentData = this.processEachDateData(data.get(presentDate).get("Confirmed")[0])
@@ -47,23 +49,28 @@ plotChart(data) {
               .append("rect")
               .attr("x", 10)
               // .attr("y", (d,i) => i * (30))
-              .attr("y", (d,i) => i * (rectProperties.height + rectProperties.padding))
+              // i = index
+              //i * (rectProperties.height + rectProperties.padding)
+              // .attr("y", (d,i) =>console.log(i * (rectProperties.height + rectProperties.padding),i) )
+              .attr("y",(d,i)=>i * (rectProperties.height + rectProperties.padding))
               .attr("width", d => widthScale(parseInt(d.value)))
               .attr("height", 20)
+              .attr("fill",'blue')
               
 },
 
 processData(data) { 
-   return d3.group(data, d => d.date, e => e.status);
+  // console.log( d3.group(data, d => d.date, e => e.status))
+  return d3.group(data, d => d.date, e => e.status);
 },
 
 processEachDateData(data) {
    //remove status and date
-   console.log(Object.keys(data))
-   delete data.date
-   delete data.status
+  console.log(Object.keys(data))
+  delete data.date
+  delete data.status
 
-   return Object.keys(data)
+  return Object.keys(data)
                 .map(key => ({key, value: data[key]}))
                 .sort((a,b) => b.value-a.value) 
 }

@@ -1,17 +1,17 @@
 <template>
   <div class="container">
     <h1>Bar-chart</h1>
-    <Charts />
+    <Charts1  />
   </div>
 </template>
 
 <script>
-import  Charts from "./components/Charts";
+import  Charts1 from "./components/Charts1";
 
 export default {
   name: 'App',
   components: {
-  Charts
+  Charts1
   }
 }
 </script>
